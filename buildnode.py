@@ -4,19 +4,19 @@ import os,sys
 import folium as fol
 import xmltodict as xtd
 
-def BuildAllNodesMap():
+def BuildAllNodesMap(bounds,node):
     x1, y1 = (float(bounds[2]), float(bounds[0]))
     x2, y2 = (float(bounds[3]), float(bounds[1]))
     center = ((x1+x2)/2, (y1+y2)/2)
     map_0 = fol.Map(location = center, zoom_start = 16)
-
+    n = len(node['id'])
     for i in range(n):
         xy = (node['xy'][i][0], node['xy'][i][1])
         fol.CircleMarker(xy, radius=3, color="green", fill=True, fill_color="green", popup=str(i)).add_to(map_0)
     return map_0
 
 #Generating a map to display all the nodes connected to the source
-def BuildAllClosestNodesMap(SourceNode, nodes_routes_values):
+def BuildAllClosestNodesMap(bounds,node,SourceNode, nodes_routes_values):
     x1, y1 = (float(bounds[2]), float(bounds[0]))
     x2, y2 = (float(bounds[3]), float(bounds[1]))
     center = ((x1+x2)/2, (y1+y2)/2)
@@ -31,7 +31,7 @@ def BuildAllClosestNodesMap(SourceNode, nodes_routes_values):
     return map_0
 
 #Generating a map to display the source and destination
-def BuildFinalSourceandDesn(i,p):
+def BuildFinalSourceandDesn(bounds,node,i,p):
     node_cds = [(node['xy'][i][0], node['xy'][i][1])]
     while p[i] != i:
         node_cds.append((node['xy'][p[i]][0], node['xy'][p[i]][1]))
@@ -45,7 +45,7 @@ def BuildFinalSourceandDesn(i,p):
     return map_0
 
 #Generating a map to display the path between source and destination
-def BuildFinalPathMap(i,p):
+def BuildFinalPathMap(bounds,node,i,p):
     node_cds = [(node['xy'][i][0], node['xy'][i][1])]
     while p[i] != i:
         node_cds.append((node['xy'][p[i]][0], node['xy'][p[i]][1]))

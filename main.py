@@ -2,6 +2,7 @@ import numpy as np
 import webbrowser
 import os,sys
 import folium as fol
+import xmltodict as xtd
 from buildnode import BuildAllNodesMap,BuildAllClosestNodesMap,BuildFinalSourceandDesn,BuildFinalPathMap
 from buildnode import  create_connectivity,OpenHTMLMapinBrowser
 #Dijkstra Algorithm used for finding the shortest path
@@ -45,6 +46,23 @@ def dijkstra(src, conn_matrix, p):
         u = u_x
         i -= 1
 
+
+def plot_routes(s, connectivity_matrix):
+    p = dict()
+    dijkstra(s, connectivity_matrix, p)
+
+    nodes_routes_values=[]
+    for i in p.keys():
+        adder=[i,0]
+        while p[i] != i:
+            adder[1]+=1
+            i = p[i]
+        nodes_routes_values.append(adder)
+
+    return nodes_routes_values,p
+
+
+print("Please wait while all Nodes Map is Generating...")
 #Parsing raw data from the .OSM File
 #osm is open street map 
 with open('Maps/mapHSR.osm', "rb") as osm_fn:
@@ -129,7 +147,7 @@ road_vals = ['highway', 'motorway', 'motorway_link', 'trunk', 'trunk_link',
              'service', 'services', 'motorway_junction']
 
 
-map1 = BuildAllNodesMap()
+map1 = BuildAllNodesMap(bounds,node)
 map1.save("AllNodeMap.html")
 OpenHTMLMapinBrowser("AllNodeMap.html")
 
@@ -145,7 +163,7 @@ while(True):
         sys.exit(1)
 
     
-    map2 = BuildAllClosestNodesMap(SourceNode, nodes_routes_values)
+    map2 = BuildAllClosestNodesMap(bounds,node,SourceNode, nodes_routes_values)
     map2.save("AllClosestNodeMap.html")
     OpenHTMLMapinBrowser("AllClosestNodeMap.html")
 
@@ -159,12 +177,12 @@ while(True):
             print("Map Ended")
             sys.exit(1)
 
-        map3 = BuildFinalSourceandDesn(DestinationNode,p)
+        map3 = BuildFinalSourceandDesn(bounds,node,DestinationNode,p)
         map3.save("SourceDestinationMap.html")
         OpenHTMLMapinBrowser("SourceDestinationMap.html")
     
 
-        map3 = BuildFinalPathMap(DestinationNode,p)
+        map3 = BuildFinalPathMap(bounds,node,DestinationNode,p)
         map3.save("OutputMap.html")
         OpenHTMLMapinBrowser("OutputMap.html")
     
