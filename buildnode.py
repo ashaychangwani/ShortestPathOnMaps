@@ -12,7 +12,7 @@ def BuildAllNodesMap(bounds,node):
     n = len(node['id'])
     for i in range(n):
         xy = (node['xy'][i][0], node['xy'][i][1])
-        fol.CircleMarker(xy, radius=3, color="green", fill=True, fill_color="green", popup=str(i)).add_to(map_0)
+        fol.CircleMarker(xy, radius=3, color="green", fill=True, fill_color="green", fill_opacity=0.8,popup=str(i)).add_to(map_0)
     return map_0
 
 #Generating a map to display all the nodes connected to the source
@@ -25,9 +25,9 @@ def BuildAllClosestNodesMap(bounds,node,SourceNode, nodes_routes_values):
     for i,j in nodes_routes_values:
         xy = (node['xy'][i][0], node['xy'][i][1])
         if(i!=SourceNode):
-            fol.CircleMarker(xy, radius=3, color="red", fill=True, fill_color="green", popup=str(i)).add_to(map_0)
+            fol.CircleMarker(xy, radius=3, color="red", fill=True, fill_color="green", fill_opacity=0.8,popup=str(i)).add_to(map_0)
         else:
-            fol.CircleMarker(xy, radius=3, color="blue", fill=True, fill_color="green", popup=str(i)).add_to(map_0)
+            fol.CircleMarker(xy, radius=3, color="blue", fill=True, fill_color="green", fill_opacity=0.8,popup=str(i)).add_to(map_0)
     return map_0
 
 #Generating a map to display the source and destination
@@ -39,8 +39,8 @@ def BuildFinalSourceandDesn(bounds,node,i,p):
 
     map_0 = fol.Map(location = node_cds[-1], zoom_start = 17)
 
-    fol.CircleMarker(node_cds[-1], radius=10, color="blue", fill=True, fill_color="orange").add_to(map_0)
-    fol.Marker(node_cds[0], icon = fol.Icon(color="blue", icon="circle", prefix='fa')).add_to(map_0)
+    fol.CircleMarker(node_cds[-1], radius=9, color="green", fill=True, fill_color="blue",fill_opacity=0.8).add_to(map_0)
+    fol.Marker(node_cds[0], icon = fol.Icon(color="blue",fill=True, icon="circle", prefix='fa')).add_to(map_0)
     
     return map_0
 
@@ -53,8 +53,8 @@ def BuildFinalPathMap(bounds,node,i,p):
 
     map_0 = fol.Map(location = node_cds[-1], zoom_start = 17)
 
-    fol.CircleMarker(node_cds[-1], radius=10, color="blue", fill=True, fill_color="orange").add_to(map_0)
-    fol.Marker(node_cds[0], icon = fol.Icon(color="blue", icon="circle", prefix='fa')).add_to(map_0)
+    fol.CircleMarker(node_cds[-1], radius=9, color="green", fill=True, fill_color="blue",fill_opacity=0.8).add_to(map_0)
+    fol.Marker(node_cds[0], icon = fol.Icon(color="blue",fill=True, icon="circle", prefix='fa')).add_to(map_0)
     
     fol.PolyLine(locations = node_cds, weight=5, color="blue", opacity="0.75", dash_array=10).add_to(map_0)
     
