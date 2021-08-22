@@ -9,7 +9,7 @@ We then create a graph based on nodes of the map. A node is simply a point on th
 ___
 ## Demo
 
-![Demo](images/demo.gif)
+![Demo](images/demo.gif)  
 Green Dot -     Nodes on the map  
 Blue Dot -      Source node  
 Blue Tag -      Destination node  
